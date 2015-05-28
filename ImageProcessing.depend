@@ -1,0 +1,78 @@
+# depslib dependency file v1.0
+1432559862 source:c:\users\emil\desktop\fmi\нно\imageprocessing\main.cpp
+	<iostream>
+	<string.h>
+	"File.h"
+	"Command.h"
+	"Image.h"
+
+1432302220 c:\users\emil\desktop\fmi\нно\imageprocessing\include\file.h
+	<string.h>
+
+1432302730 source:c:\users\emil\desktop\fmi\нно\imageprocessing\src\file.cpp
+	"File.h"
+
+1432372517 c:\users\emil\desktop\fmi\нно\imageprocessing\include\command.h
+
+1432372528 source:c:\users\emil\desktop\fmi\нно\imageprocessing\src\command.cpp
+	"Command.h"
+	<string.h>
+
+1432371491 c:\users\emil\desktop\fmi\нно\imageprocessing\include\commandline.h
+
+1432455265 source:c:\users\emil\desktop\fmi\нно\imageprocessing\src\pixel.cpp
+	"Pixel.h"
+
+1432455264 c:\users\emil\desktop\fmi\нно\imageprocessing\include\pixel.h
+
+1432653938 source:c:\users\emil\desktop\fmi\нно\imageprocessing\src\image.cpp
+	"Image.h"
+
+1432558689 c:\users\emil\desktop\fmi\нно\imageprocessing\include\image.h
+	"Pixel.h"
+	"File.h"
+	<fstream>
+	<iostream>
+	<iomanip>
+
+1432843837 source:c:\users\emil\desktop\imageprocessing\main.cpp
+	<iostream>
+	<string.h>
+	"File.h"
+	"Command.h"
+	"Image.h"
+	"PpmFile.h"
+
+1432302220 c:\users\emil\desktop\imageprocessing\include\file.h
+	<string.h>
+
+1432372517 c:\users\emil\desktop\imageprocessing\include\command.h
+
+1432842367 c:\users\emil\desktop\imageprocessing\include\image.h
+	"Pixel.h"
+	"File.h"
+	<fstream>
+	<iostream>
+	<iomanip>
+
+1432455264 c:\users\emil\desktop\imageprocessing\include\pixel.h
+
+1432372528 source:c:\users\emil\desktop\imageprocessing\src\command.cpp
+	"Command.h"
+	<string.h>
+
+1432302730 source:c:\users\emil\desktop\imageprocessing\src\file.cpp
+	"File.h"
+
+1432455265 source:c:\users\emil\desktop\imageprocessing\src\pixel.cpp
+	"Pixel.h"
+
+1432821933 source:c:\users\emil\desktop\imageprocessing\src\image.cpp
+	"Image.h"
+
+1432842367 c:\users\emil\desktop\imageprocessing\include\ppmfile.h
+	"Image.h"
+
+1432843931 source:c:\users\emil\desktop\imageprocessing\src\ppmfile.cpp
+	"PpmFile.h"
+
