@@ -10,7 +10,7 @@ class PpmFile: public Image
         PpmFile();
         PpmFile(File &);
         PpmFile(PpmFile const &);
-       // PpmFile& operator=(PpmFile const &);
+        PpmFile& operator=(PpmFile const &);
         ~PpmFile();
 
         void setHeight(int);
@@ -20,12 +20,14 @@ class PpmFile: public Image
         int getWidth();
 
         void convertToGrayscale();
-        void convertToASCIIGrayScale();
-        void readASCIIFile(ifstream &);
-        void readBinaryFile(File &o);
+        void convertToMonochrome();
+        void readBinaryFile(ifstream &);
+        void makeHistogram(HistogramColors);
 
     protected:
     private:
+        bool isP3;
+
         int maxColValue;
         int height;
         int width;
@@ -36,7 +38,10 @@ class PpmFile: public Image
         void destroy();
 
         void readFile(File &);
-
+        void binaryGrayscale();
+        void binaryMonochrome();
+        void asciiGrayscale();
+        void asciiMonochrome();
 };
 
 #endif // PPMFILE_H

@@ -1,8 +1,9 @@
 #ifndef HISTOGRAM_H
 #define HISTOGRAM_H
 
+#include "PpmFile.h"
 
-class Histogram
+class Histogram: public PpmFile
 {
     public:
         Histogram();

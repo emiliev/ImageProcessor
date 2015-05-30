@@ -9,6 +9,8 @@
 
 using namespace std;
 
+ enum HistogramColors{RED ,GREEN,BLUE};
+
 class Image
 {
     public:
@@ -18,9 +20,11 @@ class Image
         Image& operator=(Image const &);
         ~Image();
 
-        virtual void readASCIIFile(ifstream &) = 0;
-        virtual void readBinaryFile(File &) = 0;
         virtual void convertToGrayscale() = 0;
+        virtual void convertToMonochrome() = 0;
+        virtual void readBinaryFile(ifstream &) = 0;
+        virtual void makeHistogram(HistogramColors ) =0;
+
 
     protected:
 

@@ -35,20 +35,23 @@
 	<iostream>
 	<iomanip>
 
-1432843837 source:c:\users\emil\desktop\imageprocessing\main.cpp
+1432989636 source:c:\users\emil\desktop\imageprocessing\main.cpp
 	<iostream>
+	<fstream>
 	<string.h>
 	"File.h"
 	"Command.h"
 	"Image.h"
 	"PpmFile.h"
+	"PgmFile.h"
+	"PbmFile.h"
 
 1432302220 c:\users\emil\desktop\imageprocessing\include\file.h
 	<string.h>
 
 1432372517 c:\users\emil\desktop\imageprocessing\include\command.h
 
-1432842367 c:\users\emil\desktop\imageprocessing\include\image.h
+1433011195 c:\users\emil\desktop\imageprocessing\include\image.h
 	"Pixel.h"
 	"File.h"
 	<fstream>
@@ -67,12 +70,30 @@
 1432455265 source:c:\users\emil\desktop\imageprocessing\src\pixel.cpp
 	"Pixel.h"
 
-1432821933 source:c:\users\emil\desktop\imageprocessing\src\image.cpp
+1432906951 source:c:\users\emil\desktop\imageprocessing\src\image.cpp
 	"Image.h"
 
-1432842367 c:\users\emil\desktop\imageprocessing\include\ppmfile.h
+1433011359 c:\users\emil\desktop\imageprocessing\include\ppmfile.h
 	"Image.h"
 
-1432843931 source:c:\users\emil\desktop\imageprocessing\src\ppmfile.cpp
+1432972028 source:c:\users\emil\desktop\imageprocessing\src\ppmfile.cpp
 	"PpmFile.h"
+
+1432889314 source:c:\users\emil\desktop\imageprocessing\src\histogram.cpp
+	"Histogram.h"
+
+1432889317 c:\users\emil\desktop\imageprocessing\include\histogram.h
+	"PpmFile.h"
+
+1432993247 source:c:\users\emil\desktop\imageprocessing\src\pbmfile.cpp
+	"PbmFile.h"
+
+1433011359 c:\users\emil\desktop\imageprocessing\include\pbmfile.h
+	"Image.h"
+
+1432989552 source:c:\users\emil\desktop\imageprocessing\src\pgmfile.cpp
+	"PgmFile.h"
+
+1433011359 c:\users\emil\desktop\imageprocessing\include\pgmfile.h
+	"Image.h"
 
