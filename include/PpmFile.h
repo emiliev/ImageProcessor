@@ -28,12 +28,13 @@ class PpmFile: public Image
     private:
         bool isP3;
 
+        File file;
         int maxColValue;
         int height;
         int width;
         Pixel* pixels;
         char* newFileName;
-        char* getNewFileName(File &);
+        void setNewFileName(File &, char *);
         void copyFrom(PpmFile const &);
         void destroy();
 
@@ -42,6 +43,7 @@ class PpmFile: public Image
         void binaryMonochrome();
         void asciiGrayscale();
         void asciiMonochrome();
+        void histogram();
 };
 
 #endif // PPMFILE_H

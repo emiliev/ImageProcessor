@@ -2,24 +2,23 @@
 
 
 
-PpmFile::PpmFile():pixels(NULL)
+PpmFile::PpmFile():pixels(NULL), newFileName(NULL)
 {
     this->pixels = new Pixel[0];
     this->setHeight(0);
     this->setWidth(0);
     this->setMaxColValue(0);
 
-
 }
 
-PpmFile::PpmFile(File &otherFile):pixels(NULL){
+PpmFile::PpmFile(File &otherFile):pixels(NULL), newFileName(NULL){
 
+    this->file = otherFile;
     this->readFile(otherFile);
-    this->getNewFileName(otherFile);
-
+    this->histogram();
 }
 
-PpmFile::PpmFile(PpmFile const &other):pixels(NULL){
+PpmFile::PpmFile(PpmFile const &other):pixels(NULL), newFileName(NULL){
 
     copyFrom(other);
 }
@@ -101,25 +100,25 @@ void PpmFile::readFile(File &file){
     input.close();
 }
 
-char* PpmFile::getNewFileName(File &fileName){
+void PpmFile::setNewFileName(File &fileName, char* text){
 
-    char grayscale[] = "_grayscale";
-    int sizeOfGrayscale = strlen(grayscale);
-    int sizeOfFile = strlen(fileName.getFileName());
-    int sizeOfNewFile = sizeOfFile + sizeOfGrayscale + 1;
-    newFileName = new char[sizeOfNewFile];
+    delete [] newFileName;
+
+    int sizeOftext = strlen(text);
+    int sizeOfFileName = strlen(fileName.getFileName());
+    int sizeOfNewFileName = sizeOftext + sizeOfFileName + 1;
+
+    newFileName = new char[sizeOfNewFileName];
     strcpy(newFileName,fileName.getFileName());
+    for(int index = sizeOfFileName - 4; index <=sizeOfFileName; ++index){
 
-    for(int index = sizeOfFile - 4; index <= sizeOfFile; ++index){
-
-        newFileName[index + sizeOfGrayscale] = newFileName[index];
+        newFileName[index + sizeOftext] = newFileName[index];
     }
 
-    for(int index = 0 ;index <sizeOfGrayscale; ++index){
-        newFileName[sizeOfFile - 4 + index] = grayscale[index];
-    }
+    for(int index = 0; index < sizeOftext; ++index){
 
-    return newFileName;
+        newFileName[index + sizeOfFileName - 4] = text[index];
+    }
 }
 
 void PpmFile::readBinaryFile(ifstream &input){
@@ -153,6 +152,8 @@ void PpmFile::readBinaryFile(ifstream &input){
 
 void PpmFile::convertToGrayscale(){
 
+    char monochrome[] = "_grayscale";
+    this->setNewFileName(file,monochrome);
     if(!isP3){
 
         this->binaryGrayscale();
@@ -165,6 +166,8 @@ void PpmFile::convertToGrayscale(){
 
 void PpmFile::convertToMonochrome(){
 
+    char monochrome[] = "_monochrome";
+    this->setNewFileName(file,monochrome);
     if(!isP3){
 
         this->binaryMonochrome();
@@ -178,8 +181,7 @@ void PpmFile::convertToMonochrome(){
 
 void PpmFile::asciiMonochrome(){
 
-    char asd[] = "c:\\temp\\asdasdasd_monochrome.ppm";
-    ofstream output(asd);
+    ofstream output(newFileName);
     if(output){
 
         char buffer[] = "P3\n";
@@ -194,11 +196,11 @@ void PpmFile::asciiMonochrome(){
             g = this->pixels[index].getGreen();
             b = this->pixels[index].getBlue();
 
-           if(r*g*b < 127 * 127 * 127){
-                r = maxColValue;
-                g = maxColValue;
-                b = maxColValue;
-            }
+           if(r*g*b < 255 * 255 * 255 / 2 ){
+                r = 255;
+                g = 255;
+                b = 255;
+                }
             else{
                 r = 0;
                 g = 0;
@@ -206,7 +208,6 @@ void PpmFile::asciiMonochrome(){
             }
 
             output<<r<<" "<<g<<" "<<b<<" ";
-
         }
     }
 
@@ -215,8 +216,7 @@ void PpmFile::asciiMonochrome(){
 
 void PpmFile::binaryMonochrome(){
 
-    char asd[] = "c:\\temp\\asdasdasd_monochrome.ppm";
-    ofstream input(asd, ios::binary);
+    ofstream input(newFileName, ios::binary);
     if(input){
 
         char buffer[] = "P6\n";
@@ -313,6 +313,73 @@ void PpmFile::binaryGrayscale(){
 
 void PpmFile::makeHistogram(HistogramColors choice){
 
+    switch(choice){
+
+    case RED:
+
+        break;
+    case GREEN:
+
+        break;
+    case BLUE:
+
+        break;
+    }
+}
+
+void PpmFile::histogram(){
+
+    int colorArray[256] = {0};
+    for(int index =0; index < width * height; ++index){
+
+        int num = pixels[index].getRed();
+        colorArray[num]++;
+    }
+    int percent = width * height / 100;
+    int  sum = 0;
+    for(int index = 0; index < 256; ++index){
+         int number = colorArray[index] / percent;
+         sum +=number;
+         colorArray[index] = number;
+    }
+
+    int histogramArray[100][256] = {0,};
+
+    for(int col = 0; col < 256; ++col){
+
+        int range = colorArray[col];
+        for(int index = 0 ; index < range; ++index){
+
+            histogramArray[99 - index][col] = 1;
+        }
+    }
+
+    char text[] = "_histogram_red";
+    this->setNewFileName(file,text);
+    ofstream output(newFileName);
+    if(output){
+
+        output<<"P3\n";
+        output<<256<<" "<<100<<std::endl<<255<<std::endl;
+        for(int row = 0; row < 100; ++row){
+
+                for(int col = 0; col < 256; ++col){
+                int r ,g,b;
+                if(histogramArray[row][col] == 1){
+                    r = 255;
+                    g = 0;
+                    b = 0;
+                }
+                else{
+
+                    r = maxColValue;
+                    g = maxColValue;
+                    b = maxColValue;
+                }
+                output<<r<<" "<<g<<" "<<b<<" ";
+            }
+        }
+    }
 }
 
 void PpmFile::destroy(){

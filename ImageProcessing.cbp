@@ -36,7 +36,6 @@
 		</Compiler>
 		<Unit filename="include/Command.h" />
 		<Unit filename="include/File.h" />
-		<Unit filename="include/Histogram.h" />
 		<Unit filename="include/Image.h" />
 		<Unit filename="include/PbmFile.h" />
 		<Unit filename="include/PgmFile.h" />
@@ -45,7 +44,6 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="src/Command.cpp" />
 		<Unit filename="src/File.cpp" />
-		<Unit filename="src/Histogram.cpp" />
 		<Unit filename="src/Image.cpp" />
 		<Unit filename="src/PbmFile.cpp" />
 		<Unit filename="src/PgmFile.cpp" />

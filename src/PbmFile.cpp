@@ -60,7 +60,30 @@ void PbmFile::readFile(File &file){
 }
 void PbmFile::readBinaryFile(ifstream &input){
 
+    int sizeOfArray = this->width * this->height;
+    if(input){
 
+        if(!isP1){
+
+            unsigned char digit;
+            for(int index = 0; index < sizeOfArray; ++index){
+
+                input.read((char*)&digit,sizeof(unsigned char));
+                this->pixels[index] = digit;
+            }
+        }
+        else{
+
+            int digit;
+            for(int index = 0; index < sizeOfArray; ++index){
+
+                input>>digit;
+                this->pixels[index] = digit;
+            }
+        }
+   }
+
+   input.close();
 }
 
 void PbmFile::makeHistogram(HistogramColors choice){
