@@ -10,7 +10,7 @@ PgmFile::PgmFile():pixels(NULL)
 PgmFile::PgmFile(File &file){
 
     this->readFile(file);
-    this->getNewFileName(file);
+    this->someFile = file;
 }
 
 PgmFile::PgmFile(PgmFile const &other){
@@ -36,7 +36,7 @@ PgmFile::~PgmFile()
 ///populate array from .pgn file
 void PgmFile::readBinaryFile(ifstream &input){
 
-    int sizeOfArray = this->width * this->height;
+    int sizeOfArray = this->getWidth() * this->getHeight();
     if(input){
 
         if(!isP2){
@@ -68,7 +68,6 @@ void PgmFile::readFile(File  &file){
 
     char buffer[3];
     ifstream input(file.getFileName(), ios::binary);
-    std::cout<<file.getFileName()<<std::endl;
     if(input){
 
         input.read(buffer,sizeof(char) * 3);
@@ -97,33 +96,14 @@ void PgmFile::readFile(File  &file){
     input.close();
 }
 
-char* PgmFile::getNewFileName(File  &file){
-
-    char grayscale[] = "_monochrome";
-    int sizeOfGrayscale = strlen(grayscale);
-    int sizeOfFile = strlen(file.getFileName());
-    int sizeOfNewFile = sizeOfFile + sizeOfGrayscale + 1;
-    newFileName = new char[sizeOfNewFile];
-    strcpy(newFileName,file.getFileName());
-
-    for(int index = sizeOfFile - 4; index <= sizeOfFile; ++index){
-
-        newFileName[index + sizeOfGrayscale] = newFileName[index];
-    }
-
-    for(int index = 0 ;index <sizeOfGrayscale; ++index){
-        newFileName[sizeOfFile - 4 + index] = grayscale[index];
-    }
-
-    return newFileName;
-}
-
 void PgmFile::convertToGrayscale(){
     std::cout<<"converting grayscale image to grayscale, really???\n";
 }
 
 void PgmFile::convertToMonochrome(){
 
+    char monochrome[] ="_monochrome";
+    this->setNewFileName(someFile,monochrome);
     if(isP2){
 
         this->asciiMonochrome();
@@ -137,6 +117,7 @@ void PgmFile::convertToMonochrome(){
 void PgmFile::asciiMonochrome(){
 
     ofstream output(newFileName);
+
     int sizeOfArray = width * height;
 
     if(output){
@@ -147,6 +128,7 @@ void PgmFile::asciiMonochrome(){
         for(int index = 0; index < sizeOfArray; ++index){
 
             int digit = pixels[index];
+
             ///i tyk!!
            /* if(digit > maxColValue / 2){
 
@@ -167,13 +149,13 @@ void PgmFile::asciiMonochrome(){
 void PgmFile::binaryMonochrome(){
 
     ofstream output(newFileName, ios::binary);
-    int sizeOfArray = width * height;
 
+    int sizeOfArray = width * height;
 
     if(output){
         char buffer[] = "P5\n";
         output.write(buffer,sizeof(char) * 3);
-        output<<this->getWidth()<<" "<<this->getHeight()<<endl<<this->maxColValue<<endl;
+        output<<this->getWidth()<<" "<<this->getHeight()<<endl<<this->getMaxColValue()<<endl;
 
         char symbol;
         for(int index = 0; index < sizeOfArray; ++index){
@@ -199,36 +181,6 @@ void PgmFile::binaryMonochrome(){
 
 void PgmFile::makeHistogram(HistogramColors choice){
 
-}
-
-void PgmFile::setHeight(int newSize){
-
-    this->height = newSize;
-}
-
-int PgmFile::getHeight(){
-
-    return this->height;
-}
-
-void PgmFile::setWidth(int newSize){
-
-    this->width = newSize;
-}
-
-int PgmFile::getWidth(){
-
-    return this->width;
-}
-
-void PgmFile::setMaxColValue(int newSize){
-
-    this->maxColValue = newSize;
-}
-
-int PgmFile::getMaxColValue(){
-
-    return this->maxColValue;
 }
 
 void PgmFile::copyFrom(PgmFile const &other){

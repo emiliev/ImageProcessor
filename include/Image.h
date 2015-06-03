@@ -27,8 +27,19 @@ class Image
 
 
     protected:
+        int maxColValue;
+        int height;
+        int width;
+        char* newFileName;
+        void setHeight(int);
+        void setWidth(int);
+        void setMaxColValue(int);
+        int getHeight();
+        int getWidth();
+        int getMaxColValue();
 
-    private:
+        void setNewFileName(File &, char *);
+        private:
 
 
 };

@@ -99,26 +99,6 @@ void PbmFile::convertToMonochrome(){
     std::cout<<"monochrome -> monochrome ? \n";
 }
 
-void PbmFile::setHeight(int newSize){
-
-    this->height = newSize;
-}
-
-void PbmFile::setWidth(int newSize){
-
-    this->width = newSize;
-}
-
-int PbmFile::getHeight(){
-
-    return this->height;
-}
-
-int PbmFile::getWidth(){
-
-    return this->width;
-}
-
 PbmFile::~PbmFile()
 {
     destroy();

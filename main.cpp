@@ -15,6 +15,9 @@ char pgm[] =".pgm";
 char pbm[] = ".pbm";
 char gray[] = "--grayscale";
 char mono[] = "--monochrome";
+char histogramRed[] = "--histogram=red";
+char histogramGreen[] = "--histogram=green";
+char histogramBlue[] = "--histogram=blue";
 
 bool isValidFile(char* word){
 
@@ -51,6 +54,18 @@ char* getLastSymbols(char* word){
 bool isValidCommand(char* word){
 
     if(strcmp(word,mono) == 0){
+
+        return true;
+    }
+    if(strcmp(word,histogramBlue) == 0){
+
+        return true;
+    }
+    if(strcmp(word,histogramRed) == 0){
+
+        return true;
+    }
+    if(strcmp(word,histogramGreen) == 0){
 
         return true;
     }
@@ -125,6 +140,19 @@ int main(int argc, char* argv[])
             if(strcmp(commandArray[elem].getCommandName(),mono) == 0){
 
                 img[index]->convertToMonochrome();
+            }
+
+             if(strcmp(commandArray[elem].getCommandName(),histogramRed) == 0){
+
+                img[index]->makeHistogram(RED);
+            }
+             if(strcmp(commandArray[elem].getCommandName(),histogramGreen) == 0){
+
+                img[index]->makeHistogram(GREEN);
+            }
+             if(strcmp(commandArray[elem].getCommandName(),histogramBlue) == 0){
+
+                img[index]->makeHistogram(BLUE);
             }
         }
     }

@@ -11,11 +11,6 @@ class PbmFile: public Image
         PbmFile(PbmFile const &);
         PbmFile& operator=(PbmFile const &);
 
-        void setWidth(int);
-        void setHeight(int);
-        int getWidth();
-        int getHeight();
-
         void convertToGrayscale();
         void convertToMonochrome();
         void readBinaryFile(ifstream &);
@@ -24,7 +19,6 @@ class PbmFile: public Image
         ~PbmFile();
     protected:
     private:
-        int width,height;
         int* pixels;
         bool isP1;
 

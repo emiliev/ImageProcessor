@@ -2,23 +2,21 @@
 
 
 
-PpmFile::PpmFile():pixels(NULL), newFileName(NULL)
+PpmFile::PpmFile():pixels(NULL)
 {
     this->pixels = new Pixel[0];
     this->setHeight(0);
     this->setWidth(0);
     this->setMaxColValue(0);
-
 }
 
-PpmFile::PpmFile(File &otherFile):pixels(NULL), newFileName(NULL){
+PpmFile::PpmFile(File &otherFile):pixels(NULL){
 
     this->file = otherFile;
     this->readFile(otherFile);
-    this->histogram();
 }
 
-PpmFile::PpmFile(PpmFile const &other):pixels(NULL), newFileName(NULL){
+PpmFile::PpmFile(PpmFile const &other):pixels(NULL){
 
     copyFrom(other);
 }
@@ -36,30 +34,6 @@ PpmFile& PpmFile::operator=(PpmFile const &other){
 PpmFile::~PpmFile()
 {
     destroy();
-}
-
-int PpmFile::getHeight(){
-
-    return this->height;
-}
-
-int PpmFile::getWidth(){
-
-    return this->width;
-}
-void PpmFile::setHeight(int h){
-
-    this->height = h;
-}
-
-void PpmFile::setWidth(int w){
-
-    this->width = w;
-}
-
-void PpmFile::setMaxColValue(int m){
-
-    this->maxColValue = m;
 }
 
 void PpmFile::copyFrom(PpmFile const &other){
@@ -98,27 +72,6 @@ void PpmFile::readFile(File &file){
     }
 
     input.close();
-}
-
-void PpmFile::setNewFileName(File &fileName, char* text){
-
-    delete [] newFileName;
-
-    int sizeOftext = strlen(text);
-    int sizeOfFileName = strlen(fileName.getFileName());
-    int sizeOfNewFileName = sizeOftext + sizeOfFileName + 1;
-
-    newFileName = new char[sizeOfNewFileName];
-    strcpy(newFileName,fileName.getFileName());
-    for(int index = sizeOfFileName - 4; index <=sizeOfFileName; ++index){
-
-        newFileName[index + sizeOftext] = newFileName[index];
-    }
-
-    for(int index = 0; index < sizeOftext; ++index){
-
-        newFileName[index + sizeOfFileName - 4] = text[index];
-    }
 }
 
 void PpmFile::readBinaryFile(ifstream &input){
@@ -272,7 +225,6 @@ void PpmFile::asciiGrayscale(){
             b = gray;
 
             output<<r<<" "<<g<<" "<<b<<" ";
-
         }
     }
 
@@ -316,24 +268,39 @@ void PpmFile::makeHistogram(HistogramColors choice){
     switch(choice){
 
     case RED:
-
+        char red[15];
+        strcpy(red,"_histogram_red");
+        std::cout<<red<<std::endl;
+        histogram(red,choice);
         break;
     case GREEN:
-
+        char green[17];
+        strcpy(green,"_histogram_green");
+        histogram(green,choice);
         break;
     case BLUE:
-
+        char blue[16];
+        strcpy(blue,"_histogram_blue");
+        histogram(blue,choice);
         break;
     }
 }
 
-void PpmFile::histogram(){
+void PpmFile::histogram(char * text,HistogramColors choice){
 
     int colorArray[256] = {0};
     for(int index =0; index < width * height; ++index){
-
-        int num = pixels[index].getRed();
-        colorArray[num]++;
+        int num;
+        if(choice == RED){
+            num = pixels[index].getRed();
+        }
+        else if(choice == GREEN){
+            num = pixels[index].getGreen();
+        }
+        else{
+            num = pixels[index].getBlue();
+        }
+            colorArray[num]++;
     }
     int percent = width * height / 100;
     int  sum = 0;
@@ -354,7 +321,6 @@ void PpmFile::histogram(){
         }
     }
 
-    char text[] = "_histogram_red";
     this->setNewFileName(file,text);
     ofstream output(newFileName);
     if(output){
@@ -364,11 +330,20 @@ void PpmFile::histogram(){
         for(int row = 0; row < 100; ++row){
 
                 for(int col = 0; col < 256; ++col){
-                int r ,g,b;
+                int r = 0 ,g = 0,b = 0;
                 if(histogramArray[row][col] == 1){
-                    r = 255;
-                    g = 0;
-                    b = 0;
+                    if(choice == RED){
+
+                        r = maxColValue;
+                    }
+                    else if(choice == GREEN){
+
+                        g = maxColValue;
+                    }
+                    else{
+
+                        b = maxColValue;
+                    }
                 }
                 else{
 
