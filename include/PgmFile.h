@@ -14,6 +14,7 @@ class PgmFile:public Image
 
         void convertToGrayscale();
         void convertToMonochrome();
+        int makeMonochrome(int, int);
         void readBinaryFile(ifstream &);
         void makeHistogram(HistogramColors);
 

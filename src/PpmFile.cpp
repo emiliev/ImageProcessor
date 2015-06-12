@@ -43,7 +43,7 @@ void PpmFile::copyFrom(PpmFile const &other){
     this->setMaxColValue(other.maxColValue);
 }
 
-///zapochvam da cheta faila
+
 void PpmFile::readFile(File &file){
 
     char buffer[2];
@@ -77,28 +77,28 @@ void PpmFile::readFile(File &file){
 void PpmFile::readBinaryFile(ifstream &input){
 
     int sizeOfArray = this->width * this->height;
-        if(input){
-            ///read as binary
-            if(!isP3){
+    if(input){
 
-                unsigned char rgb[3];
-                for(int index = 0; index < sizeOfArray; ++index){
+        ///read as binary
+        if(!isP3){
 
-                    input.read((char*)&rgb,3);
-                    pixels[index].setRGB(rgb[0],rgb[1],rgb[2]);
-                }
+            unsigned char rgb[3];
+            for(int index = 0; index < sizeOfArray; ++index){
+
+                input.read((char*)&rgb,3);
+                pixels[index].setRGB(rgb[0],rgb[1],rgb[2]);
             }
+        }
 
-            ///read as txt
-            else{
-
-                int r,g,b;
-                for(int index = 0; index <sizeOfArray; ++index){
+        ///read as txt
+        else{
+            int r,g,b;
+            for(int index = 0; index <sizeOfArray; ++index){
 
                     input>>r>>g>>b;
                     pixels[index].setRGB(r,g,b);
-                }
             }
+        }
     }
     input.close();
 }
@@ -132,6 +132,56 @@ void PpmFile::convertToMonochrome(){
 
 }
 
+///tyka rabotim sega
+Pixel PpmFile::makeMonochrome(int index, int sizeOfImage){
+
+    int r,g,b;
+    r = this->pixels[index].getRed();
+    g = this->pixels[index].getGreen();
+    b = this->pixels[index].getBlue();
+
+    if((r + g + b) /3 < maxColValue / 2){
+        r = 0;
+        g = 0;
+        b = 0;
+    }
+    else{
+        r = maxColValue;
+        g = maxColValue;
+        b = maxColValue;
+    }
+    int redC = pixels[index].getRed() - r;
+    int blueC = pixels[index].getBlue() - b;
+    int greenC = pixels[index].getGreen() - g;
+
+    if(index + 1 < sizeOfImage){
+        int numRed = pixels[index + 1].getRed() + (redC * (7.0 / 16));
+        int numGreen = pixels[index + 1].getGreen() + (greenC * (7.0 / 16));
+        int numBlue = pixels[index + 1].getBlue() + (blueC * (7.0/ 16));
+        pixels[index + 1].setRGB(numRed,numGreen,numBlue);
+    }
+    if(index - 1 + width < sizeOfImage){
+        int numRed = pixels[index - 1 + width].getRed() + (redC * (3.0 / 16));
+        int numGreen = pixels[index - 1 + width].getGreen() + (greenC *(3.0 / 16));
+        int numBlue = pixels[index - 1 + width].getBlue() + (blueC * (3.0 / 16));
+        pixels[index - 1 + width].setRGB(numRed,numGreen,numBlue);
+    }
+    if(index + width < sizeOfImage){
+        int numRed = pixels[index + width].getRed() + (redC * (5.0 / 16));
+        int numGreen = pixels[index + width].getGreen() + (greenC *(5.0 / 16));
+        int numBlue = pixels[index + width].getBlue() + (blueC * (5.0/ 16));
+        pixels[index + width].setRGB(numRed,numGreen,numBlue);
+    }
+    if(index + 1  + width< sizeOfImage){
+        int numRed = pixels[index + 1  + width].getRed() + (redC * (1.0 / 16));
+        int numGreen = pixels[index + 1  + width].getGreen() + (greenC * (1.0 / 16));
+        int numBlue = pixels[index + 1  + width].getBlue() + (blueC * (1.0 / 16));
+        pixels[index + 1  + width].setRGB(numRed,numGreen,numBlue);
+    }
+
+    return Pixel(r,g,b);
+}
+
 void PpmFile::asciiMonochrome(){
 
     ofstream output(newFileName);
@@ -143,24 +193,8 @@ void PpmFile::asciiMonochrome(){
         int sizeOfImage = this->getWidth() * this->getHeight();
         for(int index = 0; index < sizeOfImage; ++index){
 
-            int r,g,b;
-
-            r = this->pixels[index].getRed();
-            g = this->pixels[index].getGreen();
-            b = this->pixels[index].getBlue();
-
-           if(r*g*b < 255 * 255 * 255 / 2 ){
-                r = 255;
-                g = 255;
-                b = 255;
-                }
-            else{
-                r = 0;
-                g = 0;
-                b = 0;
-            }
-
-            output<<r<<" "<<g<<" "<<b<<" ";
+            Pixel newPix = makeMonochrome(index,sizeOfImage);
+            output<<newPix.getRed()<<" "<<newPix.getGreen()<<" "<<newPix.getBlue()<<" ";
         }
     }
 
@@ -179,28 +213,26 @@ void PpmFile::binaryMonochrome(){
         unsigned char data[3];
         for(int index = 0; index < sizeOfImage; ++index){
 
-            int r,g,b;
-            r = this->pixels[index].getRed();
-            g = this->pixels[index].getGreen();
-            b = this->pixels[index].getBlue();
-
-           if(r*g*b < 127 * 127 * 127){
-                r = maxColValue;
-                g = maxColValue;
-                b = maxColValue;
-            }
-            else{
-                r = 0;
-                g = 0;
-                b = 0;
-            }
-
-            data[0] = r;
-            data[1] = g;
-            data[2] = b;
+            Pixel newPix = makeMonochrome(index,sizeOfImage);
+            data[0] = newPix.getRed();
+            data[1] = newPix.getGreen();
+            data[2] = newPix.getBlue();
             input.write((char*)&data,sizeof(unsigned char) * 3);
         }
     }
+}
+
+Pixel PpmFile::makeGrayscale(int index){
+
+    int r,g,b;
+    r = this->pixels[index].getRed();
+    g = this->pixels[index].getGreen();
+    b = this->pixels[index].getBlue();
+    int gray = (r + g + b) / 3;
+    r = gray;
+    g = gray;
+    b = gray;
+    return Pixel(r,g,b);
 }
 
 void PpmFile::asciiGrayscale(){
@@ -212,19 +244,10 @@ void PpmFile::asciiGrayscale(){
         output<<buffer;
         output<<this->getWidth()<<" "<<this->getHeight()<<endl<<this->maxColValue<<endl;
         int sizeOfImage = this->getWidth() * this->getHeight();
+
         for(int index = 0; index < sizeOfImage; ++index){
-
-            int r,g,b;
-            r = this->pixels[index].getRed();
-            g = this->pixels[index].getGreen();
-            b = this->pixels[index].getBlue();
-
-            int gray = (r + g + b) / 3;
-            r = gray;
-            g = gray;
-            b = gray;
-
-            output<<r<<" "<<g<<" "<<b<<" ";
+            Pixel newPix = makeGrayscale(index);
+            output<<newPix.getRed()<<" "<<newPix.getGreen()<<" "<<newPix.getBlue()<<" ";
         }
     }
 
@@ -244,18 +267,10 @@ void PpmFile::binaryGrayscale(){
         unsigned char data[3];
         for(int index = 0; index < sizeOfImage; ++index){
 
-            int r,g,b;
-            r = this->pixels[index].getRed();
-            g = this->pixels[index].getGreen();
-            b = this->pixels[index].getBlue();
-
-            int gray = (r + g + b) / 3;
-            r = gray;
-            g = gray;
-            b = gray;
-            data[0] = r;
-            data[1] = g;
-            data[2] = b;
+            Pixel newPix = makeGrayscale(index);
+            data[0] = newPix.getRed();
+            data[1] = newPix.getGreen();
+            data[2] = newPix.getBlue();
             input.write((char*)&data,3);
         }
     }

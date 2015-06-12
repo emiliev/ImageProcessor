@@ -63,8 +63,6 @@ void Image::setMaxColValue(int m){
 
 void Image::setNewFileName(File &fileName, char* text){
 
-    //delete [] newFileName;
-
     int sizeOftext = strlen(text);
     int sizeOfFileName = strlen(fileName.getFileName());
     int sizeOfNewFileName = sizeOftext + sizeOfFileName + 1;

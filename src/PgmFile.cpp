@@ -114,6 +114,39 @@ void PgmFile::convertToMonochrome(){
     }
 }
 
+int PgmFile::makeMonochrome(int index, int sizeOfImage){
+
+    int digit;
+    digit = this->pixels[index];
+    if( digit / 2 < maxColValue / 2){
+
+       digit = 0;
+    }
+    else{
+       digit = maxColValue;
+    }
+
+    int color = pixels[index] - digit;
+    if(index + 1 < sizeOfImage){
+
+        pixels[index + 1] += color * (7.0 / 16);
+    }
+    if(index - 1 + width < sizeOfImage){
+
+        pixels[index + 1] += color * (3.0 / 16);
+    }
+    if(index + width < sizeOfImage){
+
+        pixels[index + 1] += color * (5.0 / 16);
+    }
+    if(index + 1  + width< sizeOfImage){
+
+        pixels[index + 1] += color * (1.0 / 16);
+    }
+
+    return digit;
+}
+
 void PgmFile::asciiMonochrome(){
 
     ofstream output(newFileName);
@@ -121,24 +154,14 @@ void PgmFile::asciiMonochrome(){
     int sizeOfArray = width * height;
 
     if(output){
+
         char buffer[] = "P2\n";
         output.write(buffer,sizeof(char) * 3);
         output<<this->getWidth()<<" "<<this->getHeight()<<endl<<this->maxColValue<<endl;
 
         for(int index = 0; index < sizeOfArray; ++index){
 
-            int digit = pixels[index];
-
-            ///i tyk!!
-           /* if(digit > maxColValue / 2){
-
-                digit = 0;
-            }
-            else{
-
-                digit = maxColValue;
-            }*/
-
+            int digit = makeMonochrome( index, sizeOfArray);
             output<<digit<<" ";
         }
     }
@@ -160,18 +183,7 @@ void PgmFile::binaryMonochrome(){
         char symbol;
         for(int index = 0; index < sizeOfArray; ++index){
 
-            symbol = pixels[index];
-
-            ///predstoi obrabotka !!!
-          /*  if(symbol > maxColValue / 2){
-
-                symbol = 10;
-            }
-            else{
-
-                symbol = maxColValue;
-            }
-            */
+            symbol = makeMonochrome(index, sizeOfArray);
             output.write((char*)&symbol, sizeof(unsigned char));
         }
     }

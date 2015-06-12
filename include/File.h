@@ -18,6 +18,7 @@ class File
     private:
 
         char* fileName;
+
         void destroy();
         void copyFrom(File const &);
 

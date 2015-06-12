@@ -17,7 +17,8 @@ class PpmFile: public Image
         void convertToMonochrome();
         void readBinaryFile(ifstream &);
         void makeHistogram(HistogramColors);
-
+        Pixel makeMonochrome(int, int);
+        Pixel makeGrayscale(int);
     protected:
     private:
         bool isP3;
