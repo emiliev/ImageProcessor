@@ -18,7 +18,7 @@ class Image
         Image(File &);
         Image(const Image& other);
         Image& operator=(Image const &);
-        ~Image();
+        virtual ~Image();
 
         virtual void convertToGrayscale() = 0;
         virtual void convertToMonochrome() = 0;
@@ -40,8 +40,6 @@ class Image
         void setHeight(int);
         void setWidth(int);
         void setMaxColValue(int);
-
-
         void setNewFileName(File &, char *);
 
         private:

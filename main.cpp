@@ -175,4 +175,9 @@ int main(int argc, char* argv[])
             }
         }
     }
+
+    for(int index = 0; index < fCounter; ++index){
+
+        delete img[index];
+    }
 }
