@@ -1,0 +1,211 @@
+# depslib dependency file v1.0
+1432559862 source:c:\users\emil\desktop\fmi\нно\imageprocessing\main.cpp
+	<iostream>
+	<string.h>
+	"File.h"
+	"Command.h"
+	"Image.h"
+
+1432302220 c:\users\emil\desktop\fmi\нно\imageprocessing\include\file.h
+	<string.h>
+
+1432302730 source:c:\users\emil\desktop\fmi\нно\imageprocessing\src\file.cpp
+	"File.h"
+
+1432372517 c:\users\emil\desktop\fmi\нно\imageprocessing\include\command.h
+
+1432372528 source:c:\users\emil\desktop\fmi\нно\imageprocessing\src\command.cpp
+	"Command.h"
+	<string.h>
+
+1432371491 c:\users\emil\desktop\fmi\нно\imageprocessing\include\commandline.h
+
+1432455265 source:c:\users\emil\desktop\fmi\нно\imageprocessing\src\pixel.cpp
+	"Pixel.h"
+
+1432455264 c:\users\emil\desktop\fmi\нно\imageprocessing\include\pixel.h
+
+1432653938 source:c:\users\emil\desktop\fmi\нно\imageprocessing\src\image.cpp
+	"Image.h"
+
+1432558689 c:\users\emil\desktop\fmi\нно\imageprocessing\include\image.h
+	"Pixel.h"
+	"File.h"
+	<fstream>
+	<iostream>
+	<iomanip>
+
+1432989636 source:c:\users\emil\desktop\imageprocessing\main.cpp
+	<iostream>
+	<fstream>
+	<string.h>
+	"File.h"
+	"Command.h"
+	"Image.h"
+	"PpmFile.h"
+	"PgmFile.h"
+	"PbmFile.h"
+
+1432302220 c:\users\emil\desktop\imageprocessing\include\file.h
+	<string.h>
+
+1432372517 c:\users\emil\desktop\imageprocessing\include\command.h
+
+1433011195 c:\users\emil\desktop\imageprocessing\include\image.h
+	"Pixel.h"
+	"File.h"
+	<fstream>
+	<iostream>
+	<iomanip>
+
+1432455264 c:\users\emil\desktop\imageprocessing\include\pixel.h
+
+1432372528 source:c:\users\emil\desktop\imageprocessing\src\command.cpp
+	"Command.h"
+	<string.h>
+
+1432302730 source:c:\users\emil\desktop\imageprocessing\src\file.cpp
+	"File.h"
+
+1432455265 source:c:\users\emil\desktop\imageprocessing\src\pixel.cpp
+	"Pixel.h"
+
+1432906951 source:c:\users\emil\desktop\imageprocessing\src\image.cpp
+	"Image.h"
+
+1433077117 c:\users\emil\desktop\imageprocessing\include\ppmfile.h
+	"Image.h"
+
+1433084090 source:c:\users\emil\desktop\imageprocessing\src\ppmfile.cpp
+	"PpmFile.h"
+
+1432889314 source:c:\users\emil\desktop\imageprocessing\src\histogram.cpp
+	"Histogram.h"
+
+1432889317 c:\users\emil\desktop\imageprocessing\include\histogram.h
+	"PpmFile.h"
+
+1433108605 source:c:\users\emil\desktop\imageprocessing\src\pbmfile.cpp
+	"PbmFile.h"
+
+1433011359 c:\users\emil\desktop\imageprocessing\include\pbmfile.h
+	"Image.h"
+
+1433011483 source:c:\users\emil\desktop\imageprocessing\src\pgmfile.cpp
+	"PgmFile.h"
+
+1433011359 c:\users\emil\desktop\imageprocessing\include\pgmfile.h
+	"Image.h"
+
+1433141464 source:c:\users\emil\imageprocessor\src\command.cpp
+	"Command.h"
+	<string.h>
+
+1433141464 c:\users\emil\imageprocessor\include\command.h
+
+1433141464 source:c:\users\emil\imageprocessor\src\file.cpp
+	"File.h"
+
+1433141464 c:\users\emil\imageprocessor\include\file.h
+	<string.h>
+
+1434040935 source:c:\users\emil\imageprocessor\src\image.cpp
+	"Image.h"
+
+1433174774 c:\users\emil\imageprocessor\include\image.h
+	"Pixel.h"
+	"File.h"
+	<fstream>
+	<iostream>
+	<iomanip>
+
+1433141464 c:\users\emil\imageprocessor\include\pixel.h
+
+1433167848 source:c:\users\emil\imageprocessor\src\pbmfile.cpp
+	"PbmFile.h"
+
+1433168639 c:\users\emil\imageprocessor\include\pbmfile.h
+	"Image.h"
+
+1433922764 source:c:\users\emil\imageprocessor\src\pgmfile.cpp
+	"PgmFile.h"
+
+1434095277 c:\users\emil\imageprocessor\include\pgmfile.h
+	"Image.h"
+
+1433141464 source:c:\users\emil\imageprocessor\src\pixel.cpp
+	"Pixel.h"
+
+1433166044 source:c:\users\emil\imageprocessor\main.cpp
+	<iostream>
+	<fstream>
+	<string.h>
+	"File.h"
+	"Command.h"
+	"Image.h"
+	"PpmFile.h"
+	"PgmFile.h"
+	"PbmFile.h"
+
+1434092106 c:\users\emil\imageprocessor\include\ppmfile.h
+	"Image.h"
+
+1433889113 source:c:\users\emil\imageprocessor\src\ppmfile.cpp
+	"PpmFile.h"
+
+1434132429 source:c:\users\emil\desktop\imageprocessor\main.cpp
+	<iostream>
+	<fstream>
+	<string.h>
+	"File.h"
+	"Command.h"
+	"Image.h"
+	"PpmFile.h"
+	"PgmFile.h"
+	"PbmFile.h"
+
+1434063240 c:\users\emil\desktop\imageprocessor\include\file.h
+	<string.h>
+
+1434063240 c:\users\emil\desktop\imageprocessor\include\command.h
+
+1434132376 c:\users\emil\desktop\imageprocessor\include\image.h
+	"Pixel.h"
+	"File.h"
+	<fstream>
+	<iostream>
+	<iomanip>
+
+1434063240 c:\users\emil\desktop\imageprocessor\include\pixel.h
+
+1434063240 c:\users\emil\desktop\imageprocessor\include\ppmfile.h
+	"Image.h"
+
+1434063240 c:\users\emil\desktop\imageprocessor\include\pgmfile.h
+	"Image.h"
+
+1434063240 c:\users\emil\desktop\imageprocessor\include\pbmfile.h
+	"Image.h"
+
+1434063240 source:c:\users\emil\desktop\imageprocessor\src\command.cpp
+	"Command.h"
+	<string.h>
+
+1434063240 source:c:\users\emil\desktop\imageprocessor\src\file.cpp
+	"File.h"
+
+1434129158 source:c:\users\emil\desktop\imageprocessor\src\image.cpp
+	"Image.h"
+
+1434063240 source:c:\users\emil\desktop\imageprocessor\src\pixel.cpp
+	"Pixel.h"
+
+1434129102 source:c:\users\emil\desktop\imageprocessor\src\pbmfile.cpp
+	"PbmFile.h"
+
+1434128385 source:c:\users\emil\desktop\imageprocessor\src\pgmfile.cpp
+	"PgmFile.h"
+
+1434128133 source:c:\users\emil\desktop\imageprocessor\src\ppmfile.cpp
+	"PpmFile.h"
+
