@@ -25,6 +25,7 @@ class Image
         virtual void readBinaryFile(ifstream &) = 0;
         virtual void makeHistogram(HistogramColors ) =0;
         void startReading(ifstream &);
+        void startRecording(ofstream &);
         char* getFormat();
 
         int getHeight();
@@ -46,6 +47,7 @@ class Image
         private:
 
         char format[2];
+        bool compareFormat(char* format);
 };
 
 #endif // IMAGE_H

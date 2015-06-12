@@ -61,6 +61,17 @@ void Image::setMaxColValue(int m){
     this->maxColValue = m;
 }
 
+void Image::startRecording(ofstream &output){
+
+
+        output<<format<<endl;
+        output<<this->getWidth()<<" "<<this->getHeight()<<endl;
+        if(!(compareFormat("P1") && compareFormat("P3"))){
+
+            output<<this->maxColValue<<endl;
+        }
+}
+
 void Image::startReading(ifstream &input){
 
     if(input){
@@ -68,12 +79,24 @@ void Image::startReading(ifstream &input){
         input>>format;
         int w,h,m;
         input>>w>>h;
+        if(!(compareFormat("P1") && compareFormat("P3"))){
+
+            input>>m;
+            this->setMaxColValue(m);
+        }
         this->setWidth(w);
         this->setHeight(h);
-        //this->setMaxColValue(m);
     }
 }
 
+bool Image::compareFormat(char* text){
+
+    if(strcmp(format,text) == 0){
+
+        return true;
+    }
+    return false;
+}
 
 char* Image::getFormat(){
 

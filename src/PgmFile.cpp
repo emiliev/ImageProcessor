@@ -70,17 +70,14 @@ void PgmFile::readFile(File  &file){
     if(input){
 
         startReading(input);
-        std::cout<<getFormat()<<std::endl;
         this->pixels = new int[width * height];
         if(strcmp(getFormat(),"P5") ==0){
 
-            std::cout<<"faila e p5!\n";
             this->isP2 = false;
             this->readBinaryFile(input);
         }
         else{
 
-            std::cout<<"faila e p2!\n";
             this->isP2 = true;
             this->readBinaryFile(input);
         }
@@ -111,7 +108,7 @@ int PgmFile::makeMonochrome(int index, int sizeOfImage){
 
     int digit;
     digit = this->pixels[index];
-    if( digit / 2 < maxColValue / 2){
+    if( digit < maxColValue / 2){
 
        digit = 0;
     }
@@ -126,15 +123,15 @@ int PgmFile::makeMonochrome(int index, int sizeOfImage){
     }
     if(index - 1 + width < sizeOfImage){
 
-        pixels[index + 1] += color * (3.0 / 16);
+        pixels[index - 1 + width] += color * (3.0 / 16);
     }
     if(index + width < sizeOfImage){
 
-        pixels[index + 1] += color * (5.0 / 16);
+        pixels[index + width] += color * (5.0 / 16);
     }
     if(index + 1  + width< sizeOfImage){
 
-        pixels[index + 1] += color * (1.0 / 16);
+        pixels[index + 1 + width] += color * (1.0 / 16);
     }
 
     return digit;
@@ -148,10 +145,7 @@ void PgmFile::asciiMonochrome(){
 
     if(output){
 
-        char buffer[] = "P2\n";
-        output.write(buffer,sizeof(char) * 3);
-        output<<this->getWidth()<<" "<<this->getHeight()<<endl<<this->maxColValue<<endl;
-
+        startRecording(output);
         for(int index = 0; index < sizeOfArray; ++index){
 
             int digit = makeMonochrome( index, sizeOfArray);
@@ -169,10 +163,8 @@ void PgmFile::binaryMonochrome(){
     int sizeOfArray = width * height;
 
     if(output){
-        char buffer[] = "P5\n";
-        output.write(buffer,sizeof(char) * 3);
-        output<<this->getWidth()<<" "<<this->getHeight()<<endl<<this->getMaxColValue()<<endl;
 
+        startRecording(output);
         char symbol;
         for(int index = 0; index < sizeOfArray; ++index){
 

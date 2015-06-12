@@ -179,10 +179,8 @@ void PpmFile::asciiMonochrome(){
     ofstream output(newFileName);
     if(output){
 
-        char buffer[] = "P3\n";
-        output<<buffer;
-        output<<this->getWidth()<<" "<<this->getHeight()<<endl<<this->maxColValue<<endl;
         int sizeOfImage = this->getWidth() * this->getHeight();
+        startRecording(output);
         for(int index = 0; index < sizeOfImage; ++index){
 
             Pixel newPix = makeMonochrome(index,sizeOfImage);
@@ -195,12 +193,10 @@ void PpmFile::asciiMonochrome(){
 
 void PpmFile::binaryMonochrome(){
 
-    ofstream input(newFileName, ios::binary);
-    if(input){
+    ofstream output(newFileName, ios::binary);
+    if(output){
 
-        char buffer[] = "P6\n";
-        input.write(buffer,sizeof(char) * 3);
-        input<<this->getWidth()<<" "<<this->getHeight()<<endl<<this->maxColValue<<endl;
+        startRecording(output);
         int sizeOfImage = this->getWidth() * this->getHeight();
         unsigned char data[3];
         for(int index = 0; index < sizeOfImage; ++index){
@@ -209,7 +205,7 @@ void PpmFile::binaryMonochrome(){
             data[0] = newPix.getRed();
             data[1] = newPix.getGreen();
             data[2] = newPix.getBlue();
-            input.write((char*)&data,sizeof(unsigned char) * 3);
+            output.write((char*)&data,sizeof(unsigned char) * 3);
         }
     }
 }
@@ -232,9 +228,7 @@ void PpmFile::asciiGrayscale(){
     ofstream output(newFileName);
     if(output){
 
-        char buffer[] = "P3\n";
-        output<<buffer;
-        output<<this->getWidth()<<" "<<this->getHeight()<<endl<<this->maxColValue<<endl;
+        startRecording(output);
         int sizeOfImage = this->getWidth() * this->getHeight();
 
         for(int index = 0; index < sizeOfImage; ++index){
@@ -248,13 +242,11 @@ void PpmFile::asciiGrayscale(){
 
 void PpmFile::binaryGrayscale(){
 
-   ofstream input(newFileName, ios::binary);
+   ofstream output(newFileName, ios::binary);
 
-    if(input){
+    if(output){
 
-        char buffer[] = "P6\n";
-        input.write(buffer,sizeof(char) * 3);
-        input<<this->getWidth()<<" "<<this->getHeight()<<endl<<this->maxColValue<<endl;
+        startRecording(output);
         int sizeOfImage = this->getWidth() * this->getHeight();
         unsigned char data[3];
         for(int index = 0; index < sizeOfImage; ++index){
@@ -263,11 +255,11 @@ void PpmFile::binaryGrayscale(){
             data[0] = newPix.getRed();
             data[1] = newPix.getGreen();
             data[2] = newPix.getBlue();
-            input.write((char*)&data,3);
+            output.write((char*)&data,3);
         }
     }
 
-    input.close();
+    output.close();
 }
 
 void PpmFile::makeHistogram(HistogramColors choice){
