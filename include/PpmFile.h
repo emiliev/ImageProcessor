@@ -8,7 +8,7 @@ class PpmFile: public Image
 {
     public:
         PpmFile();
-        PpmFile(File &);
+        PpmFile(char*);
         PpmFile(PpmFile const &);
         PpmFile& operator=(PpmFile const &);
         ~PpmFile();
@@ -22,14 +22,11 @@ class PpmFile: public Image
     protected:
     private:
         bool isP3;
-
-        File file;
         Pixel* pixels;
 
         void copyFrom(PpmFile const &);
         void destroy();
-
-        void readFile(File &);
+        void readFile();
         void binaryGrayscale();
         void binaryMonochrome();
         void asciiGrayscale();

@@ -7,6 +7,7 @@
 #include <iostream>
 #include <iomanip>
 
+
 using namespace std;
 
  enum HistogramColors{RED ,GREEN,BLUE};
@@ -15,7 +16,7 @@ class Image
 {
     public:
         Image();
-        Image(File &);
+        Image(char*);
         Image(const Image& other);
         Image& operator=(Image const &);
         virtual ~Image();
@@ -37,10 +38,12 @@ class Image
         int height;
         int width;
         char* newFileName;
+        char* fileName;
         void setHeight(int);
         void setWidth(int);
         void setMaxColValue(int);
-        void setNewFileName(File &, char *);
+        void setNewFileName(char* file, char *);
+        void setFile(char* file);
 
         private:
 

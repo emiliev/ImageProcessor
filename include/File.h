@@ -21,6 +21,9 @@ class File
 
         void destroy();
         void copyFrom(File const &);
+        bool isValidFile(char* );
+
+/*        */
 
 };
 

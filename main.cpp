@@ -10,14 +10,14 @@
 
 using namespace std;
 
-char ppm[] = ".ppm";
-char pgm[] =".pgm";
-char pbm[] = ".pbm";
-char gray[] = "--grayscale";
-char mono[] = "--monochrome";
-char histogramRed[] = "--histogram=red";
-char histogramGreen[] = "--histogram=green";
-char histogramBlue[] = "--histogram=blue";
+    const char gray[] = "--grayscale";
+    const char mono[] = "--monochrome";
+    const char histogramRed[] = "--histogram=red";
+    const char histogramGreen[] = "--histogram=green";
+    const char histogramBlue[] = "--histogram=blue";
+    char ppm[] = ".ppm";
+    char pgm[] =".pgm";
+    char pbm[] = ".pbm";
 
 bool isValidFile(char* word){
 
@@ -35,49 +35,6 @@ bool isValidFile(char* word){
     return false;
 }
 
-char* getLastSymbols(char* word){
-
-    char subWord[4];
-    int counter = 0;
-    int length = strlen(word);
-    if(length > 4){
-        for(int index = length - 4; index <= length; ++index){
-
-            subWord[counter] = word[index];
-            counter++;
-        }
-    }
-
-    return subWord;
-}
-
-bool isValidCommand(char* word){
-
-    if(strcmp(word,mono) == 0){
-
-        return true;
-    }
-    if(strcmp(word,histogramBlue) == 0){
-
-        return true;
-    }
-    if(strcmp(word,histogramRed) == 0){
-
-        return true;
-    }
-    if(strcmp(word,histogramGreen) == 0){
-
-        return true;
-    }
-    else if(strcmp(word,gray) == 0){
-
-        return true;
-    }
-    else{
-        return false;
-    }
-}
-
 Image* newImage(int index, File *fileArray){
 
     ifstream input(fileArray[index].getFileName());
@@ -87,16 +44,16 @@ Image* newImage(int index, File *fileArray){
         input>>buffer;
         if(strcmp(buffer, "P6") == 0 || strcmp(buffer, "P3") == 0){
 
-            return new PpmFile(fileArray[index]);
+            return new PpmFile(fileArray[index].getFileName());
 
         }
         else if(strcmp(buffer, "P5") == 0 || strcmp(buffer, "P2") == 0){
 
-            return new PgmFile(fileArray[index]);
+            return new PgmFile(fileArray[index].getFileName());
         }
-        else if(strcmp(buffer, "P41") == 0 || strcmp(buffer, "P11") == 0){
+        else if(strcmp(buffer, "P4") == 0 || strcmp(buffer, "P1") == 0){
 
-            return new PbmFile(fileArray[index]);
+            return new PbmFile(fileArray[index].getFileName());
         }
     }
 
@@ -105,23 +62,20 @@ Image* newImage(int index, File *fileArray){
 
 int main(int argc, char* argv[])
 {
+
     int fCounter = 0;
-    int cCounter = 0;
     for(int index = 0; index < argc; ++index){
 
         if(isValidFile(argv[index])){
             fCounter++;
         }
-        if(isValidCommand(argv[index])){
-
-            cCounter++;
-        }
-    }
+      }
 
     int fileCounter = 0;
-    int commandCounter = 0;
     File *fileArray = new File[fCounter];
-    Command *commandArray = new Command[cCounter];
+
+    Command commandArray(argv, argc);
+
     for(int index = 0; index < argc; ++index){
 
         if(isValidFile(argv[index])){
@@ -129,13 +83,6 @@ int main(int argc, char* argv[])
             fileArray[fileCounter] = argv[index];
             std::cout<<"file: "<<fileArray[fileCounter].getFileName()<<std::endl;
             fileCounter++;
-        }
-
-        if(isValidCommand(argv[index])){
-
-            commandArray[commandCounter] = argv[index];
-            cout<<"command: "<<commandArray[commandCounter].getCommandName()<<std::endl;
-            commandCounter++;
         }
     }
 
@@ -149,27 +96,27 @@ int main(int argc, char* argv[])
 
             continue;
         }
-        for(int elem = 0; elem < commandCounter; ++elem){
+        for(int elem = 0; elem < commandArray.getNumberOfCommands(); ++elem){
 
-            if(strcmp(commandArray[elem].getCommandName(),gray) == 0){
+            if(strcmp(commandArray.getCommandName(elem),gray) == 0){
 
                 img[index]->convertToGrayscale();
             }
 
-            if(strcmp(commandArray[elem].getCommandName(),mono) == 0){
+            if(strcmp(commandArray.getCommandName(elem),mono) == 0){
 
                 img[index]->convertToMonochrome();
             }
 
-             if(strcmp(commandArray[elem].getCommandName(),histogramRed) == 0){
+             if(strcmp(commandArray.getCommandName(elem),histogramRed) == 0){
 
                 img[index]->makeHistogram(RED);
             }
-             if(strcmp(commandArray[elem].getCommandName(),histogramGreen) == 0){
+             if(strcmp(commandArray.getCommandName(elem),histogramGreen) == 0){
 
                 img[index]->makeHistogram(GREEN);
             }
-             if(strcmp(commandArray[elem].getCommandName(),histogramBlue) == 0){
+             if(strcmp(commandArray.getCommandName(elem),histogramBlue) == 0){
 
                 img[index]->makeHistogram(BLUE);
             }

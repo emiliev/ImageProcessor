@@ -7,7 +7,7 @@ class PgmFile:public Image
 {
     public:
         PgmFile();
-        PgmFile(File &);
+        PgmFile(char*);
         PgmFile(PgmFile const &);
         PgmFile& operator=(PgmFile const &);
         ~PgmFile();
@@ -21,13 +21,13 @@ class PgmFile:public Image
     protected:
     private:
 
-        File someFile;
+        char* fileName;
         bool isP2;
         int* pixels;
 
         void copyFrom(PgmFile const &);
         void destroy();
-        void readFile(File  &);
+        void readFile();
         void asciiMonochrome();
         void binaryMonochrome();
 };

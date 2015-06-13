@@ -153,7 +153,7 @@
 1433889113 source:c:\users\emil\imageprocessor\src\ppmfile.cpp
 	"PpmFile.h"
 
-1434141616 source:c:\users\emil\desktop\imageprocessor\main.cpp
+1434187285 source:c:\users\emil\desktop\imageprocessor\main.cpp
 	<iostream>
 	<fstream>
 	<string.h>
@@ -164,12 +164,12 @@
 	"PgmFile.h"
 	"PbmFile.h"
 
-1434063240 c:\users\emil\desktop\imageprocessor\include\file.h
+1434187285 c:\users\emil\desktop\imageprocessor\include\file.h
 	<string.h>
 
-1434063240 c:\users\emil\desktop\imageprocessor\include\command.h
+1434187330 c:\users\emil\desktop\imageprocessor\include\command.h
 
-1434141469 c:\users\emil\desktop\imageprocessor\include\image.h
+1434184556 c:\users\emil\desktop\imageprocessor\include\image.h
 	"Pixel.h"
 	"File.h"
 	<fstream>
@@ -178,34 +178,37 @@
 
 1434063240 c:\users\emil\desktop\imageprocessor\include\pixel.h
 
-1434063240 c:\users\emil\desktop\imageprocessor\include\ppmfile.h
+1434183279 c:\users\emil\desktop\imageprocessor\include\ppmfile.h
 	"Image.h"
 
-1434063240 c:\users\emil\desktop\imageprocessor\include\pgmfile.h
+1434183432 c:\users\emil\desktop\imageprocessor\include\pgmfile.h
 	"Image.h"
 
-1434063240 c:\users\emil\desktop\imageprocessor\include\pbmfile.h
+1434183401 c:\users\emil\desktop\imageprocessor\include\pbmfile.h
 	"Image.h"
 
-1434063240 source:c:\users\emil\desktop\imageprocessor\src\command.cpp
+1434185741 source:c:\users\emil\desktop\imageprocessor\src\command.cpp
 	"Command.h"
 	<string.h>
+	<iostream>
 
-1434063240 source:c:\users\emil\desktop\imageprocessor\src\file.cpp
+1434185800 source:c:\users\emil\desktop\imageprocessor\src\file.cpp
 	"File.h"
 
-1434137292 source:c:\users\emil\desktop\imageprocessor\src\image.cpp
+1434182985 source:c:\users\emil\desktop\imageprocessor\src\image.cpp
 	"Image.h"
 
 1434063240 source:c:\users\emil\desktop\imageprocessor\src\pixel.cpp
 	"Pixel.h"
 
-1434134526 source:c:\users\emil\desktop\imageprocessor\src\pbmfile.cpp
+1434183409 source:c:\users\emil\desktop\imageprocessor\src\pbmfile.cpp
 	"PbmFile.h"
 
-1434139343 source:c:\users\emil\desktop\imageprocessor\src\pgmfile.cpp
+1434183458 source:c:\users\emil\desktop\imageprocessor\src\pgmfile.cpp
 	"PgmFile.h"
 
-1434139412 source:c:\users\emil\desktop\imageprocessor\src\ppmfile.cpp
+1434183309 source:c:\users\emil\desktop\imageprocessor\src\ppmfile.cpp
 	"PpmFile.h"
+
+1434184140 c:\users\emil\desktop\imageprocessor\include\names.h
 

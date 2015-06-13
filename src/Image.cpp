@@ -5,7 +5,7 @@ Image::Image()
 
 }
 
-Image::Image(File  &fileName){
+Image::Image(char* file){
 
 
 }
@@ -30,37 +30,57 @@ Image::~Image()
 
 }
 
-
+///
+/// селектор
+///
 int Image::getHeight(){
 
     return this->height;
 }
 
+///
+/// селектор
+///
 int Image::getWidth(){
 
     return this->width;
 }
 
+///
+/// селектор
+///
 int Image::getMaxColValue(){
 
     return this->maxColValue;
 }
 
+///
+///мутатор
+///
 void Image::setHeight(int h){
 
     this->height = h;
 }
 
+///
+///мутатор
+///
 void Image::setWidth(int w){
 
     this->width = w;
 }
 
+///
+///мутатор
+///
 void Image::setMaxColValue(int m){
 
     this->maxColValue = m;
 }
 
+///
+///започва четенето на файла от потока
+///
 void Image::startRecording(ofstream &output){
 
 
@@ -72,6 +92,9 @@ void Image::startRecording(ofstream &output){
         }
 }
 
+///
+///започва записването на нов файл
+///
 void Image::startReading(ifstream &input){
 
     if(input){
@@ -89,6 +112,9 @@ void Image::startReading(ifstream &input){
     }
 }
 
+///
+///Сравняваме format с text
+///
 bool Image::compareFormat(char* text){
 
     if(strcmp(format,text) == 0){
@@ -98,19 +124,25 @@ bool Image::compareFormat(char* text){
     return false;
 }
 
+///
+///селектор
+///
 char* Image::getFormat(){
 
     return this->format;
 }
 
-void Image::setNewFileName(File &fileName, char* text){
+///
+///мутатор
+///
+void Image::setNewFileName(char* file, char* text){
 
     int sizeOftext = strlen(text);
-    int sizeOfFileName = strlen(fileName.getFileName());
+    int sizeOfFileName = strlen(file);
     int sizeOfNewFileName = sizeOftext + sizeOfFileName + 1;
 
     newFileName = new char[sizeOfNewFileName];
-    strcpy(newFileName,fileName.getFileName());
+    strcpy(newFileName,file);
     for(int index = sizeOfFileName - 4; index <=sizeOfFileName; ++index){
 
         newFileName[index + sizeOftext] = newFileName[index];
@@ -122,4 +154,9 @@ void Image::setNewFileName(File &fileName, char* text){
     }
 }
 
+void Image::setFile(char* file){
 
+    int length = strlen(file) + 1;
+    fileName = new char[length];
+    strcpy(fileName,file);
+}

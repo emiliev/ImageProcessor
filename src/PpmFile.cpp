@@ -1,7 +1,9 @@
 #include "PpmFile.h"
 
 
-
+///
+///конструктор по подразбиране
+///
 PpmFile::PpmFile():pixels(NULL)
 {
     this->pixels = new Pixel[0];
@@ -10,17 +12,26 @@ PpmFile::PpmFile():pixels(NULL)
     this->setMaxColValue(0);
 }
 
-PpmFile::PpmFile(File &otherFile):pixels(NULL){
+///
+///конструктор за общо ползване
+///
+PpmFile::PpmFile(char* otherFile):pixels(NULL){
 
-    this->file = otherFile;
-    this->readFile(otherFile);
+    this->setFile(otherFile);
+    this->readFile();
 }
 
+///
+///копиращ конструктор
+///
 PpmFile::PpmFile(PpmFile const &other):pixels(NULL){
 
     copyFrom(other);
 }
 
+///
+///предефиниран оператор за присвояване
+///
 PpmFile& PpmFile::operator=(PpmFile const &other){
 
     if(this != &other){
@@ -31,22 +42,32 @@ PpmFile& PpmFile::operator=(PpmFile const &other){
     return *this;
 }
 
+///
+///деструктор
+///
 PpmFile::~PpmFile()
 {
     destroy();
 }
 
+///
+///копираме съдържанието на other
+///
 void PpmFile::copyFrom(PpmFile const &other){
 
     this->setWidth(other.width);
     this->setHeight(other.height);
     this->setMaxColValue(other.maxColValue);
+    this->setFile(other.fileName);
 }
 
 
-void PpmFile::readFile(File &file){
+///
+///продължаваме четенето на файла от потока
+///
+void PpmFile::readFile(){
 
-    ifstream input(file.getFileName(), ios::binary);
+    ifstream input(fileName, ios::binary);
     if(input){
 
         startReading(input);
@@ -66,6 +87,9 @@ void PpmFile::readFile(File &file){
     input.close();
 }
 
+///
+///записваме съдържанието на файла
+///
 void PpmFile::readBinaryFile(ifstream &input){
 
     int sizeOfArray = this->width * this->height;
@@ -95,10 +119,13 @@ void PpmFile::readBinaryFile(ifstream &input){
     input.close();
 }
 
+///
+///конвертиране на изображението до скала на сивото
+///
 void PpmFile::convertToGrayscale(){
 
     char monochrome[] = "_grayscale";
-    this->setNewFileName(file,monochrome);
+    this->setNewFileName(fileName,monochrome);
     if(!isP3){
 
         this->binaryGrayscale();
@@ -109,10 +136,13 @@ void PpmFile::convertToGrayscale(){
    }
 }
 
+///
+///конвертиране на изображението до монохромно
+///
 void PpmFile::convertToMonochrome(){
 
     char monochrome[] = "_monochrome";
-    this->setNewFileName(file,monochrome);
+    this->setNewFileName(fileName,monochrome);
     if(!isP3){
 
         this->binaryMonochrome();
@@ -124,7 +154,9 @@ void PpmFile::convertToMonochrome(){
 
 }
 
-///tyka rabotim sega
+///
+///вътрешна функция, чрез която конвертираме до монохромно изображение
+///
 Pixel PpmFile::makeMonochrome(int index, int sizeOfImage){
 
     int r,g,b;
@@ -174,6 +206,9 @@ Pixel PpmFile::makeMonochrome(int index, int sizeOfImage){
     return Pixel(r,g,b);
 }
 
+///
+///записване на монохромното изображение във текстов файл
+///
 void PpmFile::asciiMonochrome(){
 
     ofstream output(newFileName);
@@ -191,6 +226,9 @@ void PpmFile::asciiMonochrome(){
     output.close();
 }
 
+///
+///записване на монохромното изображение във бинарен файл
+///
 void PpmFile::binaryMonochrome(){
 
     ofstream output(newFileName, ios::binary);
@@ -210,6 +248,9 @@ void PpmFile::binaryMonochrome(){
     }
 }
 
+///
+///вътрешна функция, чрез която конвертираме до сиво изображение
+///
 Pixel PpmFile::makeGrayscale(int index){
 
     int r,g,b;
@@ -223,6 +264,9 @@ Pixel PpmFile::makeGrayscale(int index){
     return Pixel(r,g,b);
 }
 
+///
+///записване на 'сиво' изображение във текстов файл
+///
 void PpmFile::asciiGrayscale(){
 
     ofstream output(newFileName);
@@ -240,6 +284,9 @@ void PpmFile::asciiGrayscale(){
     output.close();
 }
 
+///
+///записване на 'сивото' изображние във бинарен файл
+///
 void PpmFile::binaryGrayscale(){
 
    ofstream output(newFileName, ios::binary);
@@ -262,6 +309,9 @@ void PpmFile::binaryGrayscale(){
     output.close();
 }
 
+///
+///избор на хистограма
+///
 void PpmFile::makeHistogram(HistogramColors choice){
 
     switch(choice){
@@ -285,6 +335,9 @@ void PpmFile::makeHistogram(HistogramColors choice){
     }
 }
 
+///
+///вътрешна функция, чрез която записваме хистограма
+///
 void PpmFile::histogram(char * text,HistogramColors choice){
 
     int colorArray[256] = {0};
@@ -320,7 +373,7 @@ void PpmFile::histogram(char * text,HistogramColors choice){
         }
     }
 
-    this->setNewFileName(file,text);
+    this->setNewFileName(fileName,text);
     ofstream output(newFileName);
     if(output){
 
@@ -356,6 +409,9 @@ void PpmFile::histogram(char * text,HistogramColors choice){
     }
 }
 
+///
+///освобождаваме na памет
+///
 void PpmFile::destroy(){
 
     delete [] this->pixels;

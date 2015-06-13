@@ -1,5 +1,8 @@
 #include "PgmFile.h"
 
+///
+///конструктор по подразбиране
+///
 PgmFile::PgmFile():pixels(NULL)
 {
     this->setHeight(0);
@@ -7,17 +10,26 @@ PgmFile::PgmFile():pixels(NULL)
     this->setMaxColValue(0);
 }
 
-PgmFile::PgmFile(File &file){
+///
+///конструктор за общо ползване
+///
+PgmFile::PgmFile(char* file){
 
-    this->readFile(file);
-    this->someFile = file;
+    this->setFile(file);
+    this->readFile();
 }
 
+///
+///копиращ конструктор
+///
 PgmFile::PgmFile(PgmFile const &other){
 
     copyFrom(other);
 }
 
+///
+///предефиниран оператор за присвояване
+///
 PgmFile& PgmFile::operator=(PgmFile const &other){
 
     if(this != &other){
@@ -28,12 +40,17 @@ PgmFile& PgmFile::operator=(PgmFile const &other){
     return *this;
 }
 
+///
+///деструктор
+///
 PgmFile::~PgmFile()
 {
     destroy();
 }
 
-///populate array from .pgn file
+///
+///записва съдържанието на файла
+///
 void PgmFile::readBinaryFile(ifstream &input){
 
     int sizeOfArray = this->getWidth() * this->getHeight();
@@ -63,10 +80,12 @@ void PgmFile::readBinaryFile(ifstream &input){
 }
 
 
-///starts reading file
-void PgmFile::readFile(File  &file){
+///
+///продължава четенето на файла
+///
+void PgmFile::readFile(){
 
-    ifstream input(file.getFileName(), ios::binary);
+    ifstream input(fileName, ios::binary);
     if(input){
 
         startReading(input);
@@ -86,14 +105,20 @@ void PgmFile::readFile(File  &file){
     input.close();
 }
 
+///
+///конвертиране на изображението до сиво
+///
 void PgmFile::convertToGrayscale(){
     std::cout<<"converting grayscale image to grayscale, really???\n";
 }
 
+///
+///конвертиране на изображението до монохромно
+///
 void PgmFile::convertToMonochrome(){
 
     char monochrome[] ="_monochrome";
-    this->setNewFileName(someFile,monochrome);
+    this->setNewFileName(fileName,monochrome);
     if(isP2){
 
         this->asciiMonochrome();
@@ -104,6 +129,9 @@ void PgmFile::convertToMonochrome(){
     }
 }
 
+///
+/// ковертиране на изображението до монохромно
+///
 int PgmFile::makeMonochrome(int index, int sizeOfImage){
 
     int digit;
@@ -137,6 +165,9 @@ int PgmFile::makeMonochrome(int index, int sizeOfImage){
     return digit;
 }
 
+///
+///записване на изображението във текстов файл
+///
 void PgmFile::asciiMonochrome(){
 
     ofstream output(newFileName);
@@ -156,6 +187,9 @@ void PgmFile::asciiMonochrome(){
     output.close();
 }
 
+///
+///записване на изображението във бинарен файл
+///
 void PgmFile::binaryMonochrome(){
 
     ofstream output(newFileName, ios::binary);
@@ -176,17 +210,27 @@ void PgmFile::binaryMonochrome(){
     output.close();
 }
 
+///
+///хистограма..
+///
 void PgmFile::makeHistogram(HistogramColors choice){
 
 }
 
+///
+///копираре на съдържанието на other
+///
 void PgmFile::copyFrom(PgmFile const &other){
 
     this->setWidth(other.width);
     this->setHeight(other.height);
     this->setMaxColValue(other.maxColValue);
+    this->setFile(other.fileName);
 }
 
+///
+///освобождаване на паметта
+///
 void PgmFile::destroy(){
 
     delete [] this->pixels;

@@ -4,21 +4,28 @@
 class Command
 {
     public:
+
         Command();
-        Command(char*);
+        Command(char**, int);
         Command(Command const &);
         Command& operator=(Command const &);
         ~Command();
 
-        void setCommandName(char*);
-        char* getCommandName();
+        void setCommands(char**, int);
+        char* getCommandName(int);
+        int getNumberOfCommands();
 
     protected:
     private:
 
-        char* commandName;
+        char** commands;
         void destroy();
         void copyFrom(Command const &);
+        int numberOfCommands;
+        bool isValidCommand(char* word);
+        bool isExistingCommand(char* word);
+        void resizeCommands(char* word);
+
 };
 
 #endif // COMMAND_H

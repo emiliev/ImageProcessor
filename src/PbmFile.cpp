@@ -1,5 +1,7 @@
 #include "PbmFile.h"
-
+///
+///Конструктор по подразбиране
+///
 PbmFile::PbmFile():pixels(NULL)
 {
     this->setHeight(0);
@@ -7,17 +9,26 @@ PbmFile::PbmFile():pixels(NULL)
     this->pixels = new int[height * width];
 }
 
-PbmFile::PbmFile(File &other):pixels(NULL)
+///
+///Конструктор за общо ползване
+///
+PbmFile::PbmFile(char* file):pixels(NULL)
 {
-
-    this->readFile(other);
+    this->setFile(file);
+    this->readFile();
 }
 
+///
+///Копиращ конструктор
+///
 PbmFile::PbmFile(PbmFile const &other):pixels(NULL)
 {
     copyFrom(other);
 }
 
+///
+///Оператор за присвояване
+///
 PbmFile& PbmFile::operator=(PbmFile const &other){
 
     if(this != &other){
@@ -28,9 +39,12 @@ PbmFile& PbmFile::operator=(PbmFile const &other){
     return *this;
 }
 
-void PbmFile::readFile(File &file){
+///
+///продължава записването на файла
+///
+void PbmFile::readFile(){
 
-    ifstream input(file.getFileName(), ios::binary);
+    ifstream input(fileName, ios::binary);
     if(input){
 
         startReading(input);
@@ -49,6 +63,10 @@ void PbmFile::readFile(File &file){
 
     input.close();
 }
+
+///
+///записване на сдържанието на файла
+///
 void PbmFile::readBinaryFile(ifstream &input){
 
     int sizeOfArray = this->width * this->height;
@@ -77,29 +95,46 @@ void PbmFile::readBinaryFile(ifstream &input){
    input.close();
 }
 
+///
+///хистограма
+///
 void PbmFile::makeHistogram(HistogramColors choice){
 
 }
-
+///
+///конвертиране на изображението до сиво
+///
 void PbmFile::convertToGrayscale(){
     std::cout<<"monochrome -> grayscale ? \n";
 }
 
+///
+///конвертиране на изображението до черно-бяло
+///
 void PbmFile::convertToMonochrome(){
 
     std::cout<<"monochrome -> monochrome ? \n";
 }
 
+///
+///деструктор
+///
 PbmFile::~PbmFile()
 {
     destroy();
 }
 
+///
+///освобождаване на памеетта
+///
 void PbmFile::destroy(){
 
     delete [] this->pixels;
 }
 
+///
+///копира съдържанието на other
+///
 void PbmFile::copyFrom(PbmFile const &other){
 
     this->setWidth(other.width);

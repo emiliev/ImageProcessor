@@ -7,7 +7,7 @@ class PbmFile: public Image
 {
     public:
         PbmFile();
-        PbmFile(File& file);
+        PbmFile(char* file);
         PbmFile(PbmFile const &);
         PbmFile& operator=(PbmFile const &);
 
@@ -22,7 +22,7 @@ class PbmFile: public Image
         int* pixels;
         bool isP1;
 
-        void readFile(File &);
+        void readFile();
         void copyFrom(PbmFile const &);
         void destroy();
 };
